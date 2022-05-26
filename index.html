@@ -16,7 +16,7 @@
       src="https://cdn.sheetjs.com/xlsx-0.18.8/package/dist/xlsx.full.min.js"
     ></script>
     <script>
-      fetch("sample-data.xlsx")
+      fetch("inventory_test_data.xlsx")
         .then((res) => {
           return res.arrayBuffer();
         })
@@ -31,30 +31,32 @@
             );
             let json = JSON.stringify(row);
             let obj = JSON.parse(json);
-            obj.forEach(element => {
-              let item = document.createElement('li');
-              let ordered = element['Ordered']
-              let total = element['Total'];
-              item.classList.add('list-group-item');
-              item.innerText = element['Item Name'];
-              if (ordered <= total) {
-                let badge = document.createElement('span');
-                badge.classList.add('badge', 'badge-stock', 'bg-danger');
-                badge.innerText = 'Out of Stock';
-                item.appendChild(badge);
-              } else if (ordered - total < 10) {
-                let badge = document.createElement('span');
-                badge.classList.add('badge', 'badge-stock', 'bg-warning');
-                badge.innerText = 'Low Stock';
-                item.appendChild(badge);
+            obj.forEach((element) => {
+              if (element["Item_Name"] == undefined) return;
+
+              let badge = document.createElement("span");
+              let item = document.createElement("li");
+              let inventory = Math.random() * 500;
+              let total = element["Total"];
+
+              badge.classList.add("badge", "badge-stock");
+              item.classList.add("list-group-item");
+              item.innerText = element["Item_Name"];
+
+              if (inventory <= total) {
+                badge.classList.add("bg-danger");
+                badge.innerText = "Out of Stock";
+              } else if (inventory - total < 10) {
+                badge.classList.add("bg-warning");
+                badge.innerText = "Low Stock";
               } else {
-                let badge = document.createElement('span');
-                badge.classList.add('badge', 'badge-stock', 'bg-success');
-                badge.innerText = 'In Stock';
-                item.appendChild(badge);
+                badge.classList.add("bg-success");
+                badge.innerText = "In Stock";
               }
-              document.getElementById('item-list').appendChild(item);
-            })
+
+              item.appendChild(badge);
+              document.getElementById("item-list").appendChild(item);
+            });
           });
         });
     </script>
