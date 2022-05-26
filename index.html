@@ -25,12 +25,36 @@
             type: "array",
           });
 
-          workbook.SheetNames.forEach(function (sheetName) {
+          workbook.SheetNames.forEach((sheetName) => {
             let row = XLSX.utils.sheet_to_row_object_array(
               workbook.Sheets[sheetName]
             );
             let json = JSON.stringify(row);
-            console.log(json);
+            let obj = JSON.parse(json);
+            obj.forEach(element => {
+              let item = document.createElement('li');
+              let ordered = element['Ordered']
+              let total = element['Total'];
+              item.classList.add('list-group-item');
+              item.innerText = element['Item Name'];
+              if (ordered <= total) {
+                let badge = document.createElement('span');
+                badge.classList.add('badge', 'badge-stock', 'bg-danger');
+                badge.innerText = 'Out of Stock';
+                item.appendChild(badge);
+              } else if (ordered - total < 10) {
+                let badge = document.createElement('span');
+                badge.classList.add('badge', 'badge-stock', 'bg-warning');
+                badge.innerText = 'Low Stock';
+                item.appendChild(badge);
+              } else {
+                let badge = document.createElement('span');
+                badge.classList.add('badge', 'badge-stock', 'bg-success');
+                badge.innerText = 'In Stock';
+                item.appendChild(badge);
+              }
+              document.getElementById('item-list').appendChild(item);
+            })
           });
         });
     </script>
@@ -56,7 +80,8 @@
         />
       </div>
     </form>
-    <ul class="list-group">
+    <ul id="item-list" class="list-group">
+      <!--
       <li class="list-group-item">
         Item
         <span class="badge badge-stock bg-success">In Stock</span>
@@ -69,6 +94,7 @@
         Item
         <span class="badge badge-stock bg-danger">Out of Stock</span>
       </li>
+      -->
     </ul>
   </body>
 </html>
