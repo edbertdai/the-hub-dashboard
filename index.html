@@ -11,6 +11,29 @@
       rel="stylesheet"
     />
     <link href="style.css" rel="stylesheet" />
+    <script
+      lang="javascript"
+      src="https://cdn.sheetjs.com/xlsx-0.18.8/package/dist/xlsx.full.min.js"
+    ></script>
+    <script>
+      fetch("sample-data.xlsx")
+        .then((res) => {
+          return res.arrayBuffer();
+        })
+        .then((res) => {
+          let workbook = XLSX.read(new Uint8Array(res), {
+            type: "array",
+          });
+
+          workbook.SheetNames.forEach(function (sheetName) {
+            let row = XLSX.utils.sheet_to_row_object_array(
+              workbook.Sheets[sheetName]
+            );
+            let json = JSON.stringify(row);
+            console.log(json);
+          });
+        });
+    </script>
   </head>
   <body>
     <form class="form-inline">
