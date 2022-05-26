@@ -1,0 +1,20 @@
+#search-hygiene {
+  padding-left: 0.5rem;
+}
+
+.badge-stock {
+  border-radius: 0.25rem;
+}
+
+.badge-stock.bg-danger {
+  background-color: #cb444a;
+}
+
+.badge-stock.bg-success {
+  background-color: #53a551;
+}
+
+.badge-stock.bg-warning {
+  background-color: #f6c344;
+  color: #000000;
+}
