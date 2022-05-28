@@ -60,7 +60,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Search box functionality
   document
-    .getElementById("search-hygiene")
+    .getElementById("search-hygiene-input")
     .addEventListener("input", (event) => {
       // Get dashboard rows data
       let items = Array.from(document.getElementById("item-list").children);
@@ -81,5 +81,12 @@ window.addEventListener("DOMContentLoaded", () => {
           element.style.display = "none";
         }
       });
+    });
+
+  // Disable form submission to prevent page reload
+  document
+    .getElementById("search-hygiene")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
     });
 });
