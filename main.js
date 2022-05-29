@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
           item.innerText = element["Item_Name"];
 
           // Get inventory level and total requests
-          let inventory = Math.random() * 500;
+          let inventory = element["Inventory"];
           let total = element["Total"];
 
           // Modify badge based on stock level
